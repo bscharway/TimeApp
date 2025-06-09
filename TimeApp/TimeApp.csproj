@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Components\Pages\wwwroot\app.css" />
+    <Content Include="Components\Pages\wwwroot\favicon.png" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Components\Pages\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TimeZoneConverter" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>
