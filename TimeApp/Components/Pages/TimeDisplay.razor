@@ -1,19 +1,13 @@
 @page "/"
 @using TimeApp.Components.Services
+@using BlazorBootstrap
 @rendermode InteractiveServer
 @inject TimeService TimeService
+@inject ToastService ToastService
 @implements IDisposable
 
 <div class="container py-4">
     <h1 class="text-center mb-4">IOCC World Clock</h1>
-
-    <div class="utc-time card shadow-sm mb-4">
-        <div class="card-body text-center">
-            <h2 class="card-title h4 mb-3">UTC Time</h2>
-            <div class="time-display display-4 mb-2">@_utcTime.ToString("HH:mm:ss")</div>
-            <div class="date-display text-muted">@_utcTime.ToString("dddd, MMMM d, yyyy")</div>
-        </div>
-    </div>
 
     <div class="add-city card shadow-sm mb-4">
         <div class="card-body">
@@ -65,6 +59,16 @@
         </div>
     </div>
 
+    <div class="utc-time card shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h2 class="card-title h4 mb-3">UTC Time</h2>
+            <div class="time-display display-4 mb-2">
+                <h1>@_utcTime.ToString("HH:mm:ss")</h1>
+            </div>
+            <div class="date-display text-muted">@_utcTime.ToString("dddd, MMMM d, yyyy")</div>
+        </div>
+    </div>
+
     <div class="city-times">
         <h3 class="h5 mb-3">City Times</h3>
         <div class="row g-4">
@@ -90,6 +94,8 @@
         </div>
     </div>
 </div>
+
+<ToastContainer />
 
 @code {
     private DateTime _utcTime;
@@ -131,24 +137,29 @@ new CityTime { Name = "Shannon", TimeZoneId = "Europe/Dublin" }
         if (string.IsNullOrWhiteSpace(_newCityName) || string.IsNullOrWhiteSpace(_newTimeZoneId))
         {
             _errorMessage = "Please enter both city name and time zone ID";
+            ToastService.Notify(new(ToastType.Warning, "Please enter both city name and time zone ID"));
             return;
         }
 
         if (TimeService.AddCity(_newCityName, _newTimeZoneId))
         {
+            var cityName = _newCityName; // Store the name before clearing
             _newCityName = "";
             _newTimeZoneId = "";
             _errorMessage = "";
+            ToastService.Notify(new(ToastType.Success, $"City {cityName} added successfully!"));
         }
         else
         {
             _errorMessage = "Invalid time zone ID";
+            ToastService.Notify(new(ToastType.Danger, "Invalid time zone ID"));
         }
     }
 
     private void RemoveCity(string cityName)
     {
         TimeService.RemoveCity(cityName);
+        ToastService.Notify(new(ToastType.Info, $"City {cityName} removed"));
     }
 
     public void Dispose()

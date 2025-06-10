@@ -13,6 +13,7 @@ builder.Services.AddSingleton<TimeService>();
 
 // Add Blazor.Bootstrap services
 builder.Services.AddBlazorBootstrap();
+builder.Services.AddScoped<ToastService>();
 
 var app = builder.Build();
 
@@ -25,7 +26,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
