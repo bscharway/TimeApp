@@ -5,7 +5,7 @@
 @implements IDisposable
 
 <div class="container py-4">
-    <h1 class="text-center mb-4">World Clock</h1>
+    <h1 class="text-center mb-4">IOCC World Clock</h1>
 
     <div class="utc-time card shadow-sm mb-4">
         <div class="card-body text-center">
@@ -101,23 +101,13 @@
     private static readonly List<CityTime> CommonCities = new()
 {
 new CityTime { Name = "New York", TimeZoneId = "America/New_York" },
-new CityTime { Name = "Los Angeles", TimeZoneId = "America/Los_Angeles" },
-new CityTime { Name = "Chicago", TimeZoneId = "America/Chicago" },
-new CityTime { Name = "London", TimeZoneId = "Europe/London" },
 new CityTime { Name = "Paris", TimeZoneId = "Europe/Paris" },
 new CityTime { Name = "Berlin", TimeZoneId = "Europe/Berlin" },
-new CityTime { Name = "Tokyo", TimeZoneId = "Asia/Tokyo" },
-new CityTime { Name = "Sydney", TimeZoneId = "Australia/Sydney" },
-new CityTime { Name = "Dubai", TimeZoneId = "Asia/Dubai" },
-new CityTime { Name = "Moscow", TimeZoneId = "Europe/Moscow" },
-new CityTime { Name = "Singapore", TimeZoneId = "Asia/Singapore" },
-new CityTime { Name = "Hong Kong", TimeZoneId = "Asia/Hong_Kong" },
-new CityTime { Name = "Mumbai", TimeZoneId = "Asia/Kolkata" },
-new CityTime { Name = "Cairo", TimeZoneId = "Africa/Cairo" },
-new CityTime { Name = "Rio de Janeiro", TimeZoneId = "America/Sao_Paulo" },
 new CityTime { Name = "Copenhagen", TimeZoneId = "Europe/Copenhagen" },
 new CityTime { Name = "Hangzhou", TimeZoneId = "Asia/Shanghai" },
-new CityTime { Name = "Navoiy", TimeZoneId = "Asia/Tashkent" }
+new CityTime { Name = "Navoiy", TimeZoneId = "Asia/Tashkent" },
+new CityTime { Name = "London", TimeZoneId = "Europe/London" },
+new CityTime { Name = "Shannon", TimeZoneId = "Europe/Dublin" }
 };
 
     protected override void OnInitialized()

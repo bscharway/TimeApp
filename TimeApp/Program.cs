@@ -1,5 +1,6 @@
 using TimeApp.Components;
 using TimeApp.Components.Services;
+using BlazorBootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,10 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddBlazorBootstrap();
-
 // Add TimeService
 builder.Services.AddSingleton<TimeService>();
+
+// Add Blazor.Bootstrap services
+builder.Services.AddBlazorBootstrap();
 
 var app = builder.Build();
 
