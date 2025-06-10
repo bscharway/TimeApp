@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e04d7dd7-974b-411e-bb1b-b839fe4e2ae7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -57,6 +59,10 @@
 
   <ItemGroup>
     <PackageReference Include="TimeZoneConverter" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeApp.ServiceDefaults\TimeApp.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

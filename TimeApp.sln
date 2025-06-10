@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeApp", "TimeApp\TimeApp.csproj", "{60CBF57B-1562-4DC8-AC47-05F3A2F39E1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeApp.AppHost", "TimeApp.AppHost\TimeApp.AppHost.csproj", "{69D74039-C918-447C-B473-921DD1C055AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeApp.ServiceDefaults", "TimeApp.ServiceDefaults\TimeApp.ServiceDefaults.csproj", "{16DE2D2A-F241-81CF-FB60-FCED4D94624F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{60CBF57B-1562-4DC8-AC47-05F3A2F39E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CBF57B-1562-4DC8-AC47-05F3A2F39E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CBF57B-1562-4DC8-AC47-05F3A2F39E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D74039-C918-447C-B473-921DD1C055AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D74039-C918-447C-B473-921DD1C055AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D74039-C918-447C-B473-921DD1C055AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D74039-C918-447C-B473-921DD1C055AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16DE2D2A-F241-81CF-FB60-FCED4D94624F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16DE2D2A-F241-81CF-FB60-FCED4D94624F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16DE2D2A-F241-81CF-FB60-FCED4D94624F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16DE2D2A-F241-81CF-FB60-FCED4D94624F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
