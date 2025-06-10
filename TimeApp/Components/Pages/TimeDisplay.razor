@@ -62,10 +62,8 @@
     <div class="utc-time card shadow-sm mb-4">
         <div class="card-body text-center">
             <h2 class="card-title h4 mb-3">UTC Time</h2>
-            <div class="time-display display-4 mb-2">
-                <h1>@_utcTime.ToString("HH:mm:ss")</h1>
-            </div>
-            <div class="date-display text-muted">@_utcTime.ToString("dddd, MMMM d, yyyy")</div>
+            <div class="time-display display-1 mb-2 fw-bold">@_utcTime.ToString("HH:mm:ss")</div>
+            <div class="date-display text-muted h4">@_utcTime.ToString("dddd, MMMM d, yyyy")</div>
         </div>
     </div>
 
@@ -75,17 +73,17 @@
             @foreach (var city in TimeService.Cities)
             {
                 <div class="col-md-6 col-lg-4">
-                    <div class="city-time-card card shadow-sm h-100">
+                    <div class="city-time-card card shadow-sm h-100" style="background-color:black; width: min-content;"  >
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="city-name h6 mb-0">@city.Name</h4>
+                                <h4 class="city-name h6 mb-0" style="color:antiquewhite;">@city.Name</h4>
                                 <button @onclick="() => RemoveCity(city.Name)" class="btn btn-sm btn-outline-danger">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
                             </div>
-                            <div class="time-display h4 mb-2">
+                            <div class="time-display display-4 mb-2 fw-bold" style="color:antiquewhite;">
                                 @TimeService.GetLocalTime(city.TimeZoneId).ToString("HH:mm:ss")</div>
-                            <div class="date-display text-muted small">
+                            <div class="date-display text-muted h5" style="color:antiquewhite;">
                                 @TimeService.GetLocalTime(city.TimeZoneId).ToString("dddd, MMM d, yyyy")</div>
                         </div>
                     </div>
