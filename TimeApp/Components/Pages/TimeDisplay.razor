@@ -4,117 +4,92 @@
 @inject TimeService TimeService
 @implements IDisposable
 
-<div class="container">
-    <h1>World Clock</h1>
+<div class="container py-4">
+    <h1 class="text-center mb-4">World Clock</h1>
 
-    <div class="utc-time">
-        <h2>UTC Time</h2>
-        <div class="time-display">@_utcTime.ToString("yyyy-MM-dd HH:mm:ss")</div>
+    <div class="utc-time card shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h2 class="card-title h4 mb-3">UTC Time</h2>
+            <div class="time-display display-4 mb-2">@_utcTime.ToString("HH:mm:ss")</div>
+            <div class="date-display text-muted">@_utcTime.ToString("dddd, MMMM d, yyyy")</div>
+        </div>
     </div>
 
-    <div class="add-city">
-        <h3>Add City</h3>
-        <div class="input-group">
-            <input @bind="_newCityName" placeholder="City Name" />
-            <input @bind="_newTimeZoneId" placeholder="Time Zone ID (e.g., America/New_York)" />
-            <button @onclick="AddCity" class="btn btn-primary">Add</button>
+    <div class="add-city card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title h5 mb-3">Add City</h3>
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <input @bind="_newCityName" class="form-control" placeholder="City Name" list="commonCities" />
+                        <datalist id="commonCities">
+                            @foreach (var city in CommonCities)
+                            {
+                                <option value="@city.Name" />
+                            }
+                        </datalist>
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Quick Add
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            @foreach (var city in CommonCities)
+                            {
+                                <li>
+                                    <button class="dropdown-item" @onclick="() => QuickAddCity(city.Name, city.TimeZoneId)">
+                                        @city.Name
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <input @bind="_newTimeZoneId" class="form-control"
+                        placeholder="Time Zone ID (e.g., America/New_York)" list="timeZones" />
+                    <datalist id="timeZones">
+                        @foreach (var city in CommonCities)
+                        {
+                            <option value="@city.TimeZoneId" />
+                        }
+                    </datalist>
+                </div>
+                <div class="col-md-2">
+                    <button @onclick="AddCity" class="btn btn-primary w-100">Add</button>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <div class="alert alert-danger mt-3 mb-0">@_errorMessage</div>
+            }
         </div>
-        @if (!string.IsNullOrEmpty(_errorMessage))
-        {
-                <div class="error-message">@_errorMessage</div>
-        }
     </div>
 
     <div class="city-times">
-        <h3>City Times</h3>
-        @foreach (var city in TimeService.Cities)
-        {
-                <div class="city-time-card">
-                    <div class="city-name">@city.Name</div>
-                    <div class="time-display">@TimeService.GetLocalTime(city.TimeZoneId).ToString("yyyy-MM-dd HH:mm:ss")</div>
-                    <button @onclick="() => RemoveCity(city.Name)" class="btn btn-danger">Remove</button>
+        <h3 class="h5 mb-3">City Times</h3>
+        <div class="row g-4">
+            @foreach (var city in TimeService.Cities)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="city-time-card card shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="city-name h6 mb-0">@city.Name</h4>
+                                <button @onclick="() => RemoveCity(city.Name)" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                            <div class="time-display h4 mb-2">
+                                @TimeService.GetLocalTime(city.TimeZoneId).ToString("HH:mm:ss")</div>
+                            <div class="date-display text-muted small">
+                                @TimeService.GetLocalTime(city.TimeZoneId).ToString("dddd, MMM d, yyyy")</div>
+                        </div>
+                    </div>
                 </div>
-        }
+            }
+        </div>
     </div>
 </div>
-
-<style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    .utc-time {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-
-    .time-display {
-        font-size: 1.5em;
-        font-family: monospace;
-        margin: 10px 0;
-    }
-
-    .add-city {
-        margin-bottom: 20px;
-    }
-
-    .input-group {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-
-    .input-group input {
-        flex: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .error-message {
-        color: red;
-        margin-top: 5px;
-    }
-
-    .city-times {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .city-time-card {
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .city-name {
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-</style>
 
 @code {
     private DateTime _utcTime;
@@ -123,6 +98,28 @@
     private string _errorMessage = "";
     private System.Threading.Timer? _timer;
 
+    private static readonly List<CityTime> CommonCities = new()
+{
+new CityTime { Name = "New York", TimeZoneId = "America/New_York" },
+new CityTime { Name = "Los Angeles", TimeZoneId = "America/Los_Angeles" },
+new CityTime { Name = "Chicago", TimeZoneId = "America/Chicago" },
+new CityTime { Name = "London", TimeZoneId = "Europe/London" },
+new CityTime { Name = "Paris", TimeZoneId = "Europe/Paris" },
+new CityTime { Name = "Berlin", TimeZoneId = "Europe/Berlin" },
+new CityTime { Name = "Tokyo", TimeZoneId = "Asia/Tokyo" },
+new CityTime { Name = "Sydney", TimeZoneId = "Australia/Sydney" },
+new CityTime { Name = "Dubai", TimeZoneId = "Asia/Dubai" },
+new CityTime { Name = "Moscow", TimeZoneId = "Europe/Moscow" },
+new CityTime { Name = "Singapore", TimeZoneId = "Asia/Singapore" },
+new CityTime { Name = "Hong Kong", TimeZoneId = "Asia/Hong_Kong" },
+new CityTime { Name = "Mumbai", TimeZoneId = "Asia/Kolkata" },
+new CityTime { Name = "Cairo", TimeZoneId = "Africa/Cairo" },
+new CityTime { Name = "Rio de Janeiro", TimeZoneId = "America/Sao_Paulo" },
+new CityTime { Name = "Copenhagen", TimeZoneId = "Europe/Copenhagen" },
+new CityTime { Name = "Hangzhou", TimeZoneId = "Asia/Shanghai" },
+new CityTime { Name = "Navoiy", TimeZoneId = "Asia/Tashkent" }
+};
+
     protected override void OnInitialized()
     {
         _timer = new System.Threading.Timer(_ =>
@@ -130,6 +127,13 @@
             _utcTime = TimeService.GetUtcTime();
             InvokeAsync(StateHasChanged);
         }, null, 0, 1000);
+    }
+
+    private void QuickAddCity(string cityName, string timeZoneId)
+    {
+        _newCityName = cityName;
+        _newTimeZoneId = timeZoneId;
+        AddCity();
     }
 
     private void AddCity()
