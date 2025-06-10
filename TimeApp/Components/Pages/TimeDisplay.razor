@@ -69,13 +69,14 @@
 
     <div class="city-times">
         <h3 class="h5 mb-3">City Times</h3>
-        <div class="row g-2">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
             @foreach (var city in TimeService.Cities)
             {
-                <div class="col-md-6 col-lg-4">
-                    <div class="city-time-card card shadow-sm h-100" style="background-color:black; width: min-content;">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <div class="city-time-card card shadow-sm h-100"
+                        style="background-color:black; width: min-content; margin:0;">
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h4 class="city-name h6 mb-0" style="color:antiquewhite;">@city.Name</h4>
                                 <button @onclick="() => RemoveCity(city.Name)" class="btn btn-sm btn-outline-danger">
                                     <i class="bi bi-x-lg"></i>
