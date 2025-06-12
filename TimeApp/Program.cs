@@ -15,6 +15,9 @@ builder.Services.AddSingleton<TimeService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddScoped<ToastService>();
 
+// Add HttpClient
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
