@@ -120,7 +120,6 @@
     private Dictionary<string, StationData> stations = new();
     private string newStationId = "";
     private bool isLoadingInitial = true;
-    private CancellationTokenSource? newStationCts;
     private List<string> predefinedStations = new List<string> { "ekbl", "eddk", "utsa", "zhcc", "zhec", "eblg", "egbb" };
     private bool autoRefreshEnabled = false;
     private int refreshInterval = 300000; // 5 minutes by default
@@ -156,8 +155,6 @@
     public void Dispose()
     {
         refreshTimer?.Dispose();
-        newStationCts?.Cancel();
-        newStationCts?.Dispose();
     }
 
     private async Task HandleNewStationInput(KeyboardEventArgs e)
