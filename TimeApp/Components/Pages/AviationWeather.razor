@@ -2,125 +2,129 @@
 @using System.Net.Http.Json
 @using System.Text.Json
 @using System.Collections.Generic
+@using BlazorBootstrap
 @inject HttpClient Http
 
 <PageTitle>Aviation Weather</PageTitle>
 
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-4 text-gray-800">Aviation Weather</h1>
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1 class="mb-0 d-flex align-items-center">
+            <i class="bi bi-cloud-sun-fill me-2 text-primary" style="font-size:2rem;"></i>
+            Aviation Weather
+        </h1>
+        <div class="text-muted mt-1">Get the latest METAR & TAF for your favorite stations.</div>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <span class="me-2 text-secondary">Last updated: <span class="fw-semibold">@lastRefreshTime.ToString("yyyy-MM-dd HH:mm:ss UTC")</span></span>
+        <Button Color="ButtonColor.Info" Size="ButtonSize.Small" @onclick="RefreshAll" Tooltip="Refresh all stations" aria-label="Refresh all stations">
+            <i class="bi bi-arrow-clockwise"></i>
+        </Button>
+    </div>
+</div>
 
-    <div class="flex justify-between items-center mb-6">
-        <div class="text-sm text-gray-600">
-            Last updated: @(lastRefreshTime.ToString("yyyy-MM-dd HH:mm:ss UTC"))
-        </div>
-        <div class="flex items-center gap-2">
-            <div class="flex items-center">
-                <input type="checkbox" id="auto-refresh" @bind="autoRefreshEnabled" class="mr-2" />
-                <label for="auto-refresh" class="text-sm text-gray-700">Auto-refresh every</label>
+<Card class="mb-4 shadow-sm">
+    <CardHeader>
+        <i class="bi bi-plus-circle me-2 text-success"></i>
+        Add Station
+    </CardHeader>
+    <CardBody>
+        <div class="row g-2 align-items-center">
+            <div class="col-md-8">
+                <InputText @bind-Value="newStationId" class="form-control" placeholder="Enter station ID (e.g., KLAX)" @onkeyup="HandleNewStationInput" />
             </div>
-            <select @bind="refreshInterval" class="text-sm border border-gray-300 rounded px-2 py-1">
-                <option value="60000">1 minute</option>
-                <option value="300000">5 minutes</option>
-                <option value="600000">10 minutes</option>
-                <option value="1800000">30 minutes</option>
-            </select>
-            <button @onclick="RefreshAll"
-                class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded flex items-center">
-                <span class="bi bi-arrow-clockwise mr-1" aria-hidden="true"></span> Refresh All
-            </button>
+            <div class="col-md-4">
+                <Button Color="ButtonColor.Success" class="w-100" @onclick="AddStation" Tooltip="Add station" aria-label="Add station">
+                    <i class="bi bi-plus-lg"></i> Add
+                </Button>
+            </div>
         </div>
-    </div>
+    </CardBody>
+</Card>
 
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-xl font-semibold mb-4 text-gray-700">Add Station</h2>
-        <div class="flex gap-2 mb-4">
-            <input @bind="newStationId" @bind:event="oninput" @onkeyup="HandleNewStationInput"
-                placeholder="Enter station ID (e.g., KLAX)"
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-            <button @onclick="AddStation" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-                Add
-            </button>
-        </div>
+@if (isLoadingInitial)
+{
+    <div class="d-flex justify-content-center align-items-center py-5">
+        <Spinner Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
     </div>
-
-    @if (isLoadingInitial)
-    {
-        <div class="flex justify-center items-center py-16">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-        </div>
-    }
-    else
-    {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach (var station in stations)
-            {
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="bg-gray-100 px-6 py-3 flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-gray-800 uppercase">@station.Key</h2>
-                        <div class="flex items-center">
-                            @if (station.Value.IsLoading)
-                            {
-                                <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
-                            }
-                            <button @onclick="() => RefreshStation(station.Key)" class="text-blue-500 hover:text-blue-700 p-1"
-                                title="Refresh">
-                                <span class="bi bi-arrow-clockwise" aria-hidden="true"></span>
-                            </button>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var station in stations)
+        {
+            <div class="col-md-6 col-lg-4">
+                <Card class="h-100 shadow-sm position-relative">
+                    <CardHeader class="d-flex justify-content-between align-items-center bg-light">
+                        <span class="fw-bold text-primary text-uppercase">@station.Key</span>
+                        <span>
+                            <Button Color="ButtonColor.Info" Size="ButtonSize.Small" @onclick="() => RefreshStation(station.Key)" Tooltip="Refresh" aria-label="Refresh station" class="me-1">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </Button>
                             @if (!predefinedStations.Contains(station.Key.ToLower()))
                             {
-                                <button @onclick="() => RemoveStation(station.Key)" class="text-red-500 hover:text-red-700 p-1 ml-1"
-                                    title="Remove">
-                                    <span class="bi bi-x-circle" aria-hidden="true"></span>
-                                </button>
+                                <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="() => RemoveStation(station.Key)" Tooltip="Remove" aria-label="Remove station">
+                                    <i class="bi bi-x-circle"></i>
+                                </Button>
                             }
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        @if (!string.IsNullOrEmpty(station.Value.Error))
+                        </span>
+                    </CardHeader>
+                    <CardBody>
+                        @if (station.Value.IsLoading)
                         {
-                            <div class="text-red-500 mb-2">@station.Value.Error</div>
+                            <div class="d-flex justify-content-center align-items-center py-4">
+                                <Spinner Color="SpinnerColor.Primary" />
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(station.Value.Error))
+                        {
+                            <Alert Color="AlertColor.Danger" Dismissible="false">
+                                <i class="bi bi-exclamation-triangle me-2"></i>@station.Value.Error
+                            </Alert>
                         }
                         else
                         {
                             <div>
-                                <h3 class="font-semibold text-gray-600 mb-1">METAR</h3>
-                                @if (!string.IsNullOrEmpty(station.Value.Metar))
-                                {
-                                    <div class="bg-gray-50 p-3 rounded-lg mb-4">
-                                        <pre class="whitespace-pre-wrap font-mono text-sm">@station.Value.Metar</pre>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p class="text-gray-500 italic mb-4">No METAR data available.</p>
-                                }
-
-                                <h3 class="font-semibold text-gray-600 mb-1">TAF</h3>
-                                @if (!string.IsNullOrEmpty(station.Value.Taf))
-                                {
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <pre class="whitespace-pre-wrap font-mono text-sm">@station.Value.Taf</pre>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p class="text-gray-500 italic">No TAF data available.</p>
-                                }
+                                <div class="mb-3">
+                                    <div class="fw-semibold text-secondary mb-1">METAR</div>
+                                    @if (!string.IsNullOrEmpty(station.Value.Metar))
+                                    {
+                                        <div class="mb-3" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                                            <pre class="mb-0 text-break">@station.Value.Metar</pre>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">No METAR data available.</span>
+                                    }
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-secondary mb-1">TAF</div>
+                                    @if (!string.IsNullOrEmpty(station.Value.Taf))
+                                    {
+                                        <div class="mb-3" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                                            <pre class="mb-0 text-break">@station.Value.Taf</pre>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">No TAF data available.</span>
+                                    }
+                                </div>
                             </div>
                         }
-                    </div>
-                </div>
-            }
-        </div>
-    }
-</div>
+                    </CardBody>
+                </Card>
+            </div>
+        }
+    </div>
+}
 
 @code {
     private Dictionary<string, StationData> stations = new();
     private string newStationId = "";
     private bool isLoadingInitial = true;
-    private List<string> predefinedStations = new List<string> { "ekbl", "eddk", "utsa", "zhcc", "zhec", "eblg", "egbb" };
+    private List<string> predefinedStations = new List<string> { "ekbi", "eddk", "utsa", "zhcc", "zhec", "eblg", "egbb" };
     private bool autoRefreshEnabled = false;
     private int refreshInterval = 300000; // 5 minutes by default
     private System.Threading.Timer? refreshTimer;
