@@ -18,6 +18,9 @@ builder.Services.AddScoped<ToastService>();
 // Add HttpClient
 builder.Services.AddHttpClient();
 
+// Add health checks
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,9 +35,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+// Add health check endpoint
+app.MapHealthChecks("/health");
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 // Configure port for Azure App Service
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-app.Run();
+Console.WriteLine($"Starting application on port {port}");
+Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
+app.Run($"http://0.0.0.0:{port}");
