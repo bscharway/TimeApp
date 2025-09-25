@@ -68,3 +68,6 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: ${{ env.CONTAINER_REGISTRY }}/${{ env.REPO }}:${{ github.sha }}
+          registry-url: ${{ env.CONTAINER_REGISTRY }}
+          registry-username: ${{ secrets.ACR_USERNAME }}
+          registry-password: ${{ secrets.ACR_PASSWORD }}
