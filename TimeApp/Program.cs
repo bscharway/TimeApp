@@ -35,4 +35,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+// Configure port for Azure App Service
+var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
 app.Run();
