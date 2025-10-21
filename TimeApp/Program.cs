@@ -41,8 +41,4 @@ app.MapHealthChecks("/health");
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-// Configure port for Azure App Service
-var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-Console.WriteLine($"Starting application on port {port}");
-Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
-app.Run($"http://0.0.0.0:{port}");
+app.Run();
